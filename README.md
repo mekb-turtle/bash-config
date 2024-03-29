@@ -22,4 +22,10 @@ Install node:
     pnpm i pnpm -g
     \npm un corepack npm pnpm -g # 
 
+Install script to open neovim for man pages:
+    
+    cd pager
+    make
+    sudo make install
+
 Also see my [other dotfiles](https://github.com/mekb-turtle/dotfiles)
