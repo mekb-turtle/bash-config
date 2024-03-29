@@ -1,0 +1,14 @@
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
+- defaults:
+    link:
+      relink: true
+
+- create: []
+
+- link:
+    ~/.bashrc: bashrc
+    ~/.bash_aliases: bash_aliases
+    ~/.bash_profile: bash_profile
+    ~/.bash_logout: bash_logout
