@@ -10,8 +10,16 @@ Uses [dotbot](https://github.com/anishathalye/dotbot)
 
 Packages to install:
 
-- TODO
+- `eza` `zoxide` `bat` (or `batcat`) `nvm`
 
-Command to install packages: `paru -S`
+Command to install packages: `paru -S eza zoxide bat nvm`
+
+Install node:
+
+    nvm ls-remote
+    nvm install <version> # install node
+    \npm i pnpm -g # replace npm with pnpm
+    pnpm i pnpm -g
+    \npm un corepack npm pnpm -g # 
 
 Also see my [other dotfiles](https://github.com/mekb-turtle/dotfiles)
