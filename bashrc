@@ -56,4 +56,5 @@ export LDFLAGS=-fuse-ld=mold
 [[ -n "$UID" ]] && export XDG_RUNTIME_DIR="/run/user/$UID"
 mkdir /run/user/1000/mpd -p
 setterm -cursor on
+todo list
 true
