@@ -10,7 +10,7 @@ Uses [dotbot](https://github.com/anishathalye/dotbot)
 
 Packages to install:
 
-- `eza` `zoxide` `bat` (or `batcat`) `nvm`
+- `eza` `zoxide` `bat` (or `batcat`) `nvm` `mold`
 
 Command to install packages: `paru -S eza zoxide bat nvm`
 
