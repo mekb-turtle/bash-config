@@ -191,6 +191,7 @@ function x() {
 }
 function eslintrc() { cp ~/.eslintrc.json .; }
 alias lns=symlink
+alias dm='sudo cryptsetup'
 alias dd='dd bs=4096'
 function aursrc() { makepkg --printsrcinfo >.SRCINFO; }
 alias libTAS='env -uWAYLAND_DISPLAY -uSDL_VIDEODRIVER /bin/libTAS'
@@ -199,3 +200,6 @@ alias syu='paru -Syu'
 alias Syu='paru -Syu'
 alias S='paru -S'
 alias waypipe='waypipe '
+function uuid(){
+	(IFS=' '; printf "%s\n" $(blkid "$@"))
+}
