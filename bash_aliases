@@ -68,14 +68,23 @@ function copyfile() {
 		echo "Usage: copy <file>"
 		return 1
 	fi
+	filename="$1"
 	if [[ ! -f "$1" ]]; then
-		printf '"%s" is not a file\n' "$1"
-		return 1
+		if [[ "$1" == "http://"* || "$1" == "https://"* ]]; then
+			echo "Downloading file..." >&2
+			filename="/tmp/$(base64 -w0 <<<"$1" | sed 's|/|_|g')"
+			if [[ ! -f "$filename" ]]; then
+				curl -sL -- "$1" >"$filename"
+			fi
+		else
+			printf '"%s" is not a file\n' "$1"
+			return 1
+		fi
 	fi
 	local MIME
-	MIME="$(file -Lb --mime-type -- "$1")"
+	MIME="$(file -Lb --mime-type -- "$filename")"
 	echo "Mime type: $MIME" >&2
-	wl-copy --type "$MIME" <"$1"
+	wl-copy --type "$MIME" <"$filename"
 }
 alias copy=copyfile
 alias clip=wl-copy
@@ -200,6 +209,9 @@ alias syu='paru -Syu'
 alias Syu='paru -Syu'
 alias S='paru -S'
 alias waypipe='waypipe '
-function uuid(){
-	(IFS=' '; printf "%s\n" $(blkid "$@"))
+function uuid() {
+	(
+		IFS=' '
+		printf "%s\n" $(blkid "$@")
+	)
 }
