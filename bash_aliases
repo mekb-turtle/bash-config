@@ -215,3 +215,4 @@ function uuid() {
 		printf "%s\n" $(blkid "$@")
 	)
 }
+alias fd='sudo fdisk -l'
