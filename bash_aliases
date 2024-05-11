@@ -43,6 +43,8 @@ alias uctl=dinitctl
 alias doas='doas '
 alias sudo='doas '
 
+alias neofetch=hyfetch
+
 alias clone='git clone'
 alias grm='git rm --cached'
 alias gdiff='git diff'
