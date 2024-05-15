@@ -38,6 +38,7 @@ prepend_path() {
 }
 append_path "/usr/local/bin"
 append_path "$HOME/.local/bin"
+append_path "$HOME/.cargo/bin"
 prepend_path "$HOME/.bin"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 . /usr/share/nvm/init-nvm.sh
