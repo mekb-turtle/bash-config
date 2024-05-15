@@ -218,3 +218,11 @@ function uuid() {
 	)
 }
 alias fd='sudo fdisk -l'
+function scr() {
+	name="${1-Main}"
+	if ls /run/screens/S-"$USER"/ | sed "s/^[0-9]*\.//" | grep -xF -- "$name"; then
+		screen -xr -- "$name"
+	else
+		screen -S "$name"
+	fi
+}
