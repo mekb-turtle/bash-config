@@ -57,5 +57,13 @@ export LDFLAGS=-fuse-ld=mold
 [[ -n "$UID" ]] && export XDG_RUNTIME_DIR="/run/user/$UID"
 mkdir /run/user/1000/mpd -p
 setterm -cursor on
-todo list
+function check_todo() {
+	local A
+	A="$(script -qefc 'todo list' /dev/null)"
+	if [[ "$?" -eq 0 ]]; then
+		printf "%s\n" "$A"
+	fi
+}
+check_todo
+unset -f check_todo
 true
