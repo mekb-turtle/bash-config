@@ -9,6 +9,7 @@ alias dc=cd
 alias cp='cp -i --one-file-system'
 alias mv='mv -i'
 alias rm='rm -i --one-file-system'
+alias rmu='\rm --one-file-system'
 alias lsfs='lsfs -q -c'
 alias less='less --RAW-CONTROL-CHARS'
 alias tree='exa --tree'
@@ -113,14 +114,13 @@ alias allowport="doas setcap 'cap_net_bind_service=+ep'" # allow a binary to bin
 alias nt='netstat -tnp'
 alias ntl='netstat -ltnp'
 alias rsy='rsync --archive --hard-links --acls --xattrs --verbose --one-file-system --atimes --times --numeric-ids' # preserves literally everything about files
+alias tarall='tar --verbose --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
 # quick aliases for killing programs
 function killjava() { killall -9 java; }
 function killwine() { killall -9 winepath wineserver wine-preloader wine64-preloader wine64 wine; }
 
 alias javav='doas archlinux-java'
 alias ctemp='clone https://github.com/mekb-turtle/c-template.git c-template && cd c-template && rm -rf .git && cd ..' # clone the c-template
-function pvc() { doas protonvpn c; }
-function pvd() { doas protonvpn d; }
 function gimp() {
 	/usr/bin/gimp "$@" 2>/dev/null >/dev/null &
 	disown
