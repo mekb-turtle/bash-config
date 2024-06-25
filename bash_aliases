@@ -44,6 +44,41 @@ alias uctl=dinitctl
 alias doas='doas '
 alias sudo='doas '
 
+function filecopy() {
+	local dest
+	local base
+	local out
+	local path
+	dest="$1"
+	shift
+	for i in "$@"; do
+		path="$(realpath -- "$i")"
+		if [[ ! -f "$path" ]]; then
+			echo "Source is not a file: $path" >&2
+			return 1
+		fi
+		base="$(basename -- "$path")"
+		if [[ ! -d "$dest" ]]; then
+			echo "Destination is not a directory: $dest" >&2
+			return 1
+		fi
+		out="$dest/$base"
+		echo "Copying $path to $out..."
+		if ! pv -Yo "$out" -- "$path"; then
+			echo "Failed to copy $path to $out" >&2
+			return 1
+		fi
+		HASH_1="$(sha256sum -- "$path" | awk '{print $1}')"
+		echo "Input hash: $HASH_1" >&2
+		HASH_2="$(sha256sum -- "$out" | awk '{print $1}')"
+		echo "Output hash: $HASH_2" >&2
+		if [[ "$HASH_1" != "$HASH_2" ]]; then
+			echo "Hashes do not match" >&2
+			return 1
+		fi
+	done
+}
+
 alias neofetch=hyfetch
 
 alias clone='git clone'
@@ -114,7 +149,7 @@ alias allowport="doas setcap 'cap_net_bind_service=+ep'" # allow a binary to bin
 alias nt='netstat -tnp'
 alias ntl='netstat -ltnp'
 alias rsy='rsync --archive --hard-links --acls --xattrs --verbose --one-file-system --atimes --times --numeric-ids' # preserves literally everything about files
-alias tarall='tar --verbose --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
+alias tarall='tar --verbose --one-file-system --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
 # quick aliases for killing programs
 function killjava() { killall -9 java; }
 function killwine() { killall -9 winepath wineserver wine-preloader wine64-preloader wine64 wine; }
@@ -152,39 +187,20 @@ alias paclog='grep -aF "[PACMAN]" /var/log/pacman.log' # show pacman log
 alias ej='sudo eject'
 alias um='sudo umount'
 alias m='sudo mount'
+alias mr='sudo mount -r'
 
 function mkcd() {
 	test -n "$1" || return
 	test -d "$1" || mkdir -- "$1" && builtin cd -- "$1"
 }
-function getrealpath() { # gets the real path of a file/directory, follows symlinks
-	if [[ "$#" == "1" ]]; then
-		path="$1"
-		if [[ -n "$path" ]]; then
-			if ! [[ "$path" == "/"* ]]; then
-				oldpath="$path"
-				path="$(env which -- "$path" 2>/dev/null)" || path="$oldpath"
-			fi
-			oldpath=""
-			while [[ "$oldpath" != "$path" ]]; do
-				oldpath="$path"
-				path="$(env realpath -- "$path")"
-			done
-			printf "%s\n" "$path"
-		fi
-	else
-		echo "Usage: real <file>"
-	fi
-}
 function cdreal() {
 	# changes directory to the real path
 	local CDREALPATH
-	CDREALPATH="$(getrealpath "${1-.}")"
+	CDREALPATH="$(realpath -- "${1-.}")"
 	printf "%s\n" "$CDREALPATH"
 	\cd -- "$CDREALPATH"
 }
-alias real=getrealpath
-alias realpath=getrealpath
+alias real=realpath
 
 function cleanup() {
 	pacman -Qdtq | paru -Rns - && paru -Sc
@@ -219,10 +235,24 @@ function uuid() {
 }
 alias fd='sudo fdisk -l'
 function scr() {
-	name="${1-Main}"
-	if ls /run/screens/S-"$USER"/ | sed "s/^[0-9]*\.//" | grep -xF -- "$name"; then
-		screen -xr -- "$name"
-	else
-		screen -S "$name"
-	fi
+	(
+		set -o errexit -o pipefail || return 1
+		SCREENS="$(find /run/screens/S-"$USER"/ -maxdepth 1 -type s | sed "s/^.*\/[0-9]*\.//")"
+		if [[ "$#" -eq 0 ]]; then
+			echo "Available screens:"
+			printf "%s\n" "$SCREENS"
+			return 0
+		fi
+		if [[ "$#" -ne 1 ]]; then
+			printf "Usage: scr <screen>\n" >&2
+			return 1
+		fi
+
+		name="${1-Main}"
+		if grep -xF -- "$name" <<<"$SCREENS"; then
+			exec screen -xr -- "$name"
+		else
+			exec screen -T xterm-kitty -S "$name"
+		fi
+	)
 }
