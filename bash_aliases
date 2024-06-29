@@ -142,6 +142,7 @@ alias clear=resetclear
 
 # a lot of the following aliases probably aren't going to be useful for other people so feel free to remove them
 alias npm=pnpm
+alias npx=pnpx
 alias df='df -h'
 alias ufw='doas ufw'
 alias uf='ufw status numbered'
