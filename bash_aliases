@@ -149,8 +149,8 @@ alias uf='ufw status numbered'
 alias allowport="doas setcap 'cap_net_bind_service=+ep'" # allow a binary to bind to ports below 1024
 alias nt='netstat -tnp'
 alias ntl='netstat -ltnp'
-alias rsy='rsync --archive --hard-links --acls --xattrs --verbose --one-file-system --atimes --times --numeric-ids --info=progress2' # preserves literally everything about files
-alias tarall='tar --verbose --one-file-system --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
+alias rsy='rsync --archive --hard-links --acls --xattrs --one-file-system --atimes --times --numeric-ids --info=progress2' # preserves literally everything about files
+alias tarall='tar --one-file-system --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
 # quick aliases for killing programs
 function killjava() { killall -9 java; }
 function killwine() { killall -9 winepath wineserver wine-preloader wine64-preloader wine64 wine; }
