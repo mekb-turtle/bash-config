@@ -33,16 +33,23 @@ alias lcl='exa -las created'
 alias cd..='cd ..'
 alias ..='cd ..'
 alias bat='bat --decorations never'
-alias dmesg='doas dmesg'
-alias gparted='doas gparted'
-alias shutdown='/usr/local/sbin/do shutdown' # see https://github.com/mekb-turtle/do
-alias restart='/usr/local/sbin/do restart'
+if [[ "$OS" == "Windows_NT" ]]; then
+	alias shutdown='shutdown -s -t 0'
+	alias restart='shutdown -r -t 0'
+	alias sudo='sudo '
+	alias doas='sudo '
+else
+	alias dmesg='doas dmesg'
+	alias gparted='doas gparted'
+	alias shutdown='/usr/local/sbin/do shutdown' # see https://github.com/mekb-turtle/do
+	alias restart='/usr/local/sbin/do restart'
+	alias ctl='doas dinitctl'
+	alias uctl=dinitctl
+	alias doas='doas '
+	alias sudo='doas '
+fi
 alias poweroff='shutdown'
 alias reboot='restart'
-alias ctl='doas dinitctl'
-alias uctl=dinitctl
-alias doas='doas '
-alias sudo='doas '
 
 function filecopy() {
 	local dest
