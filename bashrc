@@ -40,6 +40,7 @@ append_path "/usr/local/bin"
 append_path "$HOME/.local/bin"
 append_path "$HOME/.cargo/bin"
 prepend_path "$HOME/.bin"
+prepend_path "$HOME/.bin/convert"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 . /usr/share/nvm/init-nvm.sh
 append_path "$PNPM_HOME"
