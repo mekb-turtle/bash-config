@@ -39,14 +39,14 @@ if [[ "$OS" == "Windows_NT" ]]; then
 	alias sudo='sudo '
 	alias doas='sudo '
 else
-	alias dmesg='doas dmesg'
-	alias gparted='doas gparted'
+	alias dmesg='sudo dmesg'
+	alias gparted='sudo gparted'
 	alias shutdown='/usr/local/sbin/do shutdown' # see https://github.com/mekb-turtle/do
 	alias restart='/usr/local/sbin/do restart'
-	alias ctl='doas dinitctl'
+	alias ctl='sudo dinitctl'
 	alias uctl=dinitctl
-	alias doas='doas '
-	alias sudo='doas '
+	alias doas='sudo '
+	alias sudo='sudo '
 fi
 alias poweroff='shutdown'
 alias reboot='restart'
@@ -151,9 +151,9 @@ alias clear=resetclear
 alias npm=pnpm
 alias npx=pnpx
 alias df='df -h'
-alias ufw='doas ufw'
+alias ufw='sudo ufw'
 alias uf='ufw status numbered'
-alias allowport="doas setcap 'cap_net_bind_service=+ep'" # allow a binary to bind to ports below 1024
+alias allowport="sudo setcap 'cap_net_bind_service=+ep'" # allow a binary to bind to ports below 1024
 alias nt='netstat -tnp'
 alias ntl='netstat -ltnp'
 alias rsy='rsync --archive --hard-links --acls --xattrs --one-file-system --atimes --times --numeric-ids --info=progress2' # preserves literally everything about files
@@ -162,7 +162,7 @@ alias tarall='tar --one-file-system --xattrs --acls --numeric-owner --preserve-p
 function killjava() { killall -9 java; }
 function killwine() { killall -9 winepath wineserver wine-preloader wine64-preloader wine64 wine; }
 
-alias javav='doas archlinux-java'
+alias javav='sudo archlinux-java'
 alias ctemp='clone https://github.com/mekb-turtle/c-template.git c-template && cd c-template && rm -rf .git && cd ..' # clone the c-template
 function gimp() {
 	/usr/bin/gimp "$@" 2>/dev/null >/dev/null &
