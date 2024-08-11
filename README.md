@@ -25,7 +25,7 @@ Install node:
 Install script to open neovim for man pages:
     
     cd pager
-    make
-    sudo make install
+    meson setup build
+    sudo meson install -C build
 
 Also see my [other dotfiles](https://github.com/mekb-turtle/dotfiles)

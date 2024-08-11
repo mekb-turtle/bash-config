@@ -46,7 +46,7 @@ else
 	alias ctl='sudo dinitctl'
 	alias uctl=dinitctl
 	alias doas='sudo '
-	alias sudo='sudo '
+	alias sudo='sudo -A '
 fi
 alias poweroff='shutdown'
 alias reboot='restart'
