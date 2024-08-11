@@ -19,21 +19,21 @@ PROMPT_COMMAND=
 PS0=
 PS1='\[\e]2;\u \w\a\]\[\e[0;2;37m\]'"$(if [[ -n "$SSH_CLIENT" ]]; then echo "(desktop) "; fi)"'`RETVAL=$?; [[ $RETVAL -ne 0 ]] && printf %s "$RETVAL "; unset RETVAL`\[\e[0;38;5;10m\e]11;#1e1e2e\a\]\u\[\e[0;38;5;14m\] `PWDHOME="$PWD"; P=""; [[ "$PWDHOME" == "$HOME"* ]] && PWDHOME="${PWDHOME/"$HOME"/"~"}"; while [[ "${#PWDHOME}" -gt 48 ]]; do P="..."; L="${#PWDHOME}"; PWDHOME="${PWDHOME#*\/}"; if [[ "${#PWDHOME}" == "$L" ]]; then break; fi; done; while [[ "${#PWDHOME}" -gt 48 ]]; do P="...—"; PWDHOME="${PWDHOME:1}"; done; printf "%s" "$P$PWDHOME"`\[\e[0;37m\] > \[\e[0m\]'
 PS2="\[\e[0;37m\]> \[\e[0m\]"
-. ~/.bash_aliases&>/dev/null
+. ~/.bash_aliases &>/dev/null
 append_path() {
 	case ":$PATH:" in
-		*:"$1":*)
-			;;
-		*)
-			PATH="${PATH:+$PATH:}$1"
+	*:"$1":*) ;;
+	*)
+		PATH="${PATH:+$PATH:}$1"
+		;;
 	esac
 }
 prepend_path() {
 	case ":$PATH:" in
-		*:"$1":*)
-			;;
-		*)
-			PATH="$1${PATH:+:$PATH}"
+	*:"$1":*) ;;
+	*)
+		PATH="$1${PATH:+:$PATH}"
+		;;
 	esac
 }
 append_path "/usr/local/bin"
@@ -46,9 +46,13 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 append_path "$PNPM_HOME"
 export PATH
 CDPATH=".:$HOME"
-TMP_DIR="/tmp/env_${UID}"; mkdir -p -- "$TMP_DIR"; chmod 700 -- "$TMP_DIR"
-SSH_ENV="$TMP_DIR/ssh_env"; if [[ ! -f "$SSH_ENV" ]]; then /usr/bin/ssh-agent | sed "/^echo/d;s/;.*//" > "$SSH_ENV"; fi
-chmod 600 -- "$SSH_ENV"; [[ -s "$SSH_ENV" ]] && IFS=$'\n' export $(<"$SSH_ENV")
+TMP_DIR="/tmp/env_${UID}"
+mkdir -p -- "$TMP_DIR"
+chmod 700 -- "$TMP_DIR"
+SSH_ENV="$TMP_DIR/ssh_env"
+if [[ ! -f "$SSH_ENV" ]]; then /usr/bin/ssh-agent | sed "/^echo/d;s/;.*//" >"$SSH_ENV"; fi
+chmod 600 -- "$SSH_ENV"
+[[ -s "$SSH_ENV" ]] && IFS=$'\n' export $(<"$SSH_ENV")
 unset TMP_DIR SSH_ENV DBUS_ENV
 export GPG_TTY="$(tty)"
 export SSH_ASKPASS=/usr/local/bin/askpass
@@ -67,5 +71,11 @@ function check_todo() {
 }
 check_todo
 unset -f check_todo
-[[ -f /usr/share/blesh/ble.sh ]] && [[ $- == *i* ]] && source /usr/share/blesh/ble.sh
+if [[ $- == *i* ]]; then
+	if [[ -f /usr/share/blesh/ble.sh ]]; then
+		source /usr/share/blesh/ble.sh
+	elif [[ -f ~/.local/share/blesh/ble.sh ]]; then
+		source ~/.local/share/blesh/ble.sh
+	fi
+fi
 true

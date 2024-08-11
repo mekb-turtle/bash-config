@@ -143,7 +143,6 @@ function resetclear() {
 	printf "\x1b[H\x1b[2J\x1b[3J\x1bc\x1b]104\x1b[!p\x1b[?3;4l\x1b[4l\x1b>\x1b[?69l"
 	stty sane
 }
-bind -x $'"\x0c":"resetclear"' # clear on ctrl+L
 alias reset=resetclear
 alias clear=resetclear
 

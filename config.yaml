@@ -12,3 +12,4 @@
     ~/.bash_aliases: bash_aliases
     ~/.bash_profile: bash_profile
     ~/.bash_logout: bash_logout
+    ~/.blerc: blerc
