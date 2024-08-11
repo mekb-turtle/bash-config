@@ -67,4 +67,5 @@ function check_todo() {
 }
 check_todo
 unset -f check_todo
+[[ -f /usr/share/blesh/ble.sh ]] && [[ $- == *i* ]] && source /usr/share/blesh/ble.sh
 true
