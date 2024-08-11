@@ -1,5 +1,5 @@
 bleopt input_encoding=UTF-8
-bleopt editor=
+#bleopt editor=nvim
 bleopt complete_auto_complete=
 ble-bind -f C-Delete kill-forward-cword
 ble-bind -f C-h kill-backward-cword
