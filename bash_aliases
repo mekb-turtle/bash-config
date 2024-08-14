@@ -1,41 +1,67 @@
 #!/bin/bash
-if [[ "$TERM" != "linux" ]]; then
-	alias exa='exa -hg --color=auto --icons -b'
+HAS_EXA=false
+if type exa >/dev/null 2>/dev/null; then HAS_EXA=true; fi
+if $HAS_EXA; then
+	if [[ "$TERM" != "linux" ]]; then
+		alias exa='exa -hg --color=auto --icons -b'
+	else
+		alias exa='exa -hg --color=auto -b'
+	fi
+	alias tree='exa --tree'
+	alias ls=exa
+	alias l='exa -as modified'
+	alias la='exa -as modified'
+	alias ll='exa -la'
+	alias sl=exa
+	alias lsd=exa
+	alias lss=exa
+	alias lls=exa
+	alias lsc='exa -s modified'
+	alias lc='exa -as modified'
+	alias lac='exa -as modified'
+	alias lca='exa -as modified'
+	alias lcl='exa -las modified'
 else
-	alias exa='exa -hg --color=auto -b'
+	alias ls='ls --color=auto -b -k'
+	alias l='ls -A -t'
+	alias la='ls -A -t'
+	alias ll='ls -lA'
+	alias sl=ls
+	alias lsd=ls
+	alias lss=ls
+	alias lls=ls
+	alias lsc='ls -t'
+	alias lc='ls -A -t'
+	alias lac='ls -A -t'
+	alias lca='ls -A -t'
+	alias lcl='ls -lA -t'
 fi
 alias c=cd
 alias dc=cd
-alias cp='cp -i --one-file-system'
+if cp --help | grep --quiet -- --one-file-system; then
+	alias cp='cp -i --one-file-system'
+else
+	alias cp='cp -i'
+fi
 alias mv='mv -i'
-alias rm='rm -i --one-file-system'
-alias rmu='\rm --one-file-system'
+if rm --help | grep --quiet -- --one-file-system; then
+	alias rm='rm -i --one-file-system'
+	alias rmu='\rm --one-file-system'
+else
+	alias rm='rm -i'
+	alias rmu='\rm'
+fi
 alias lsfs='lsfs -q -c'
 alias less='less --RAW-CONTROL-CHARS'
-alias tree='exa --tree'
-alias ls=exa
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
-alias l='exa -a'
-alias la='exa -a'
-alias ll='exa -la'
-alias sl=exa
-alias lsd=exa
-alias lss=exa
-alias lls=exa
-alias lsc='exa -s created'
-alias lc='exa -as created'
-alias lac='exa -as created'
-alias lca='exa -as created'
-alias lcl='exa -las created'
 alias cd..='cd ..'
 alias ..='cd ..'
-alias bat='bat --decorations never'
 if [[ "$OS" == "Windows_NT" ]]; then
-	alias shutdown='shutdown -s -t 0'
-	alias restart='shutdown -r -t 0'
+	alias shutdown='\shutdown -s -t 0'
+	alias restart='\shutdown -r -t 0'
 	alias sudo='sudo '
 	alias doas='sudo '
 else
@@ -136,8 +162,8 @@ alias clip=wl-copy
 alias paste=wl-paste
 alias xrandr=wlr-randr
 alias xev=wev
-which bat >/dev/null && alias cat=bat
-which batcat >/dev/null && alias cat=batcat
+if type bat >/dev/null 2>/dev/null; then alias bat='bat --decorations never'; alias cat=bat; fi
+if type batcat >/dev/null 2>/dev/null; then alias batcat='batcat --decorations never'; alias bat=batcat; alias cat=batcat; fi
 function resetclear() {
 	# actually clear the console
 	printf "\x1b[H\x1b[2J\x1b[3J\x1bc\x1b]104\x1b[!p\x1b[?3;4l\x1b[4l\x1b>\x1b[?69l"
@@ -185,7 +211,7 @@ alias vi=nvim
 alias vim=nvim
 alias xephyr=Xephyr
 
-. ~/.bin/misc/bash_aliases_ssh # more aliases for ssh commands
+if [[ -f ~/.bin/misc/bash_aliases_ssh ]]; then . ~/.bin/misc/bash_aliases_ss; fi # more aliases for ssh commands
 function updssh() { ~/.bin/updssh && exec bash; }
 
 function termdown() { /bin/termdown "$@" && notify-send "Timer finished!"; } # Timer

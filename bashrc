@@ -19,7 +19,7 @@ PROMPT_COMMAND=
 PS0=
 PS1='\[\e]2;\u \w\a\]\[\e[0;2;37m\]'"$(if [[ -n "$SSH_CLIENT" ]]; then echo "(desktop) "; fi)"'`RETVAL=$?; [[ $RETVAL -ne 0 ]] && printf %s "$RETVAL "; unset RETVAL`\[\e[0;38;5;10m\e]11;#1e1e2e\a\]\u\[\e[0;38;5;14m\] `PWDHOME="$PWD"; P=""; [[ "$PWDHOME" == "$HOME"* ]] && PWDHOME="${PWDHOME/"$HOME"/"~"}"; while [[ "${#PWDHOME}" -gt 48 ]]; do P="..."; L="${#PWDHOME}"; PWDHOME="${PWDHOME#*\/}"; if [[ "${#PWDHOME}" == "$L" ]]; then break; fi; done; while [[ "${#PWDHOME}" -gt 48 ]]; do P="...—"; PWDHOME="${PWDHOME:1}"; done; printf "%s" "$P$PWDHOME"`\[\e[0;37m\] > \[\e[0m\]'
 PS2="\[\e[0;37m\]> \[\e[0m\]"
-. ~/.bash_aliases &>/dev/null
+. ~/.bash_aliases
 append_path() {
 	case ":$PATH:" in
 	*:"$1":*) ;;
@@ -42,7 +42,7 @@ append_path "$HOME/.cargo/bin"
 prepend_path "$HOME/.bin"
 prepend_path "$HOME/.bin/convert"
 export PNPM_HOME="$HOME/.local/share/pnpm"
-. /usr/share/nvm/init-nvm.sh
+[[ -f /usr/share/nvm/init-nvm.sh ]] && . /usr/share/nvm/init-nvm.sh
 append_path "$PNPM_HOME"
 export PATH
 CDPATH=".:$HOME"
@@ -58,10 +58,10 @@ export GPG_TTY="$(tty)"
 export SSH_ASKPASS=/usr/local/bin/askpass
 export SSH_ASKPASS_REQUIRE=force
 export XDG_CONFIG_HOME=~/.config
-export LDFLAGS=-fuse-ld=mold
+if type mold >/dev/null 2>/dev/null; then export LDFLAGS=-fuse-ld=mold; fi
 [[ -n "$UID" ]] && export XDG_RUNTIME_DIR="/run/user/$UID"
 mkdir /run/user/1000/mpd -p
-setterm -cursor on
+type setterm >/dev/null 2>/dev/null && setterm -cursor on
 function check_todo() {
 	local A
 	A="$(script -qefc 'todo list' /dev/null)"

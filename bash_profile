@@ -1,3 +1,3 @@
 #!/bin/bash
-. /etc/locale.conf
+[[ -f /etc/locale.conf ]] && . /etc/locale.conf
 . ~/.bashrc
