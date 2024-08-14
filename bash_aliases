@@ -211,7 +211,9 @@ alias vi=nvim
 alias vim=nvim
 alias xephyr=Xephyr
 
-if [[ -f ~/.bin/misc/bash_aliases_ssh ]]; then . ~/.bin/misc/bash_aliases_ss; fi # more aliases for ssh commands
+# more aliases for ssh and other commands
+# obviously not provided in this repository
+if [[ -f ~/.bin/misc/bash_aliases_ssh ]]; then . ~/.bin/misc/bash_aliases_ssh; fi # more aliases for ssh commands
 function updssh() { ~/.bin/updssh && exec bash; }
 
 function termdown() { /bin/termdown "$@" && notify-send "Timer finished!"; } # Timer
