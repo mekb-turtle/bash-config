@@ -223,6 +223,8 @@ alias vi=nvim
 alias vim=nvim
 alias xephyr=Xephyr
 
+GIT_INIT=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+
 # more aliases for ssh and other commands
 # obviously not provided in this repository
 if [[ -f ~/.bin/misc/bash_aliases_ssh ]]; then . ~/.bin/misc/bash_aliases_ssh; fi # more aliases for ssh commands
