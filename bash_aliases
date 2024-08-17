@@ -73,6 +73,17 @@ else
 	alias uctl=dinitctl
 	alias doas='sudo '
 	alias sudo='sudo -A '
+	
+	if type paru >/dev/null 2>/dev/null; then
+		function cleanup() {
+			local pkg
+			pkg="$(paru -Qdtq)"
+			if [[ -n "$pkg" ]]; then
+				paru -Rns - <<< "$pkg" || return "$?"
+			fi
+			paru -Sc
+		}
+	fi
 fi
 alias poweroff='shutdown'
 alias reboot='restart'
@@ -238,9 +249,6 @@ function cdreal() {
 }
 alias real=realpath
 
-function cleanup() {
-	pacman -Qdtq | paru -Rns - && paru -Sc
-}
 alias uxplay='uxplay -p'
 alias dot='cd ~/.dotfiles/'
 function x() {
