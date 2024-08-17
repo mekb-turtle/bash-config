@@ -16,8 +16,40 @@ export EXA_COLORS="ur=38;5;11:uw=38;5;9:ux=38;5;10:ue=38;5;10:gr=38;5;11:gw=38;5
 export EDITOR=/usr/bin/nvim
 export MANPAGER=/usr/local/bin/pager
 PROMPT_COMMAND=
+function get_clean_return_value(){
+	local RETVAL=$?
+	if [[ $RETVAL -ne 0 ]]; then printf %s "$RETVAL "; fi
+}
+function get_clean_working_directory(){
+	local N_CHAR
+	N_CHAR=48
+	local PWDHOME
+	local P
+	local ORIG
+	PWDHOME="$PWD"
+	PREFIX=""
+	# replace home with ~
+	if [[ "$PWDHOME" == "$HOME"* ]]; then PWDHOME="${PWDHOME/"$HOME"/"~"}"; fi
+	while [[ "${#PWDHOME}" -gt "$N_CHAR" ]]; do
+		# trim leading directory until less than n characters
+		PREFIX="..."
+		ORIG="${#PWDHOME}"
+		PWDHOME="${PWDHOME#*\/}"
+		if [[ "${#PWDHOME}" == "$ORIG" ]]; then break; fi
+	done
+	while [[ "${#PWDHOME}" -gt "$N_CHAR" ]]; do
+		# trim leading characters until less than n characters
+		# e.g if directory name is too long
+		PREFIX="...—"
+		PWDHOME="${PWDHOME:1}"
+	done
+	printf "%s" "$PREFIX$PWDHOME"
+}
+function get_clean_computer_name(){
+	if [[ -n "$SSH_CLIENT" ]]; then printf "%s" "($(hostname)) "; fi
+}
 PS0=
-PS1='\[\e]2;\u \w\a\]\[\e[0;2;37m\]'"$(if [[ -n "$SSH_CLIENT" ]]; then echo "(desktop) "; fi)"'`RETVAL=$?; [[ $RETVAL -ne 0 ]] && printf %s "$RETVAL "; unset RETVAL`\[\e[0;38;5;10m\e]11;#1e1e2e\a\]\u\[\e[0;38;5;14m\] `PWDHOME="$PWD"; P=""; [[ "$PWDHOME" == "$HOME"* ]] && PWDHOME="${PWDHOME/"$HOME"/"~"}"; while [[ "${#PWDHOME}" -gt 48 ]]; do P="..."; L="${#PWDHOME}"; PWDHOME="${PWDHOME#*\/}"; if [[ "${#PWDHOME}" == "$L" ]]; then break; fi; done; while [[ "${#PWDHOME}" -gt 48 ]]; do P="...—"; PWDHOME="${PWDHOME:1}"; done; printf "%s" "$P$PWDHOME"`\[\e[0;37m\] > \[\e[0m\]'
+PS1='\[\e]2;\$ $(get_clean_working_directory)\a\]\[\e[0;2;37m\]'"$(get_clean_computer_name)"'$(get_clean_return_value)\[\e[0;38;5;10m\e]11;#1e1e2e\a\]\$\[\e[0;38;5;14m\] $(get_clean_working_directory)\[\e[0;37m\] > \[\e[0m\]'
 PS2="\[\e[0;37m\]> \[\e[0m\]"
 . ~/.bash_aliases
 append_path() {

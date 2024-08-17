@@ -121,7 +121,8 @@ alias glog='git log'
 alias push='git push'
 alias pull='git pull'
 alias checkout='git checkout'
-function ca() { git add . && git commit -S "$@"; }
+alias commit='git commit'
+alias ca='git commit -S'
 
 eval "$(zoxide init bash)"
 alias cd=z
