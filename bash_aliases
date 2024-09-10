@@ -72,7 +72,11 @@ else
 	alias ctl='sudo dinitctl'
 	alias uctl=dinitctl
 	alias doas='sudo '
-	alias sudo='sudo -A '
+	if [[ -n "$DISPLAY" ]]; then
+		alias sudo='sudo -A '
+	else
+		alias sudo='sudo '
+	fi
 	
 	if type paru >/dev/null 2>/dev/null; then
 		function cleanup() {
