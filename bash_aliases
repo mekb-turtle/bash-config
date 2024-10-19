@@ -306,3 +306,4 @@ function scr() {
 		fi
 	)
 }
+alias vts='vt scan file -o'
