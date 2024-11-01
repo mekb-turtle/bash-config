@@ -276,6 +276,7 @@ alias sedw='sed "/^\s*\(#\|$\)/d"'
 alias syu='paru -Syu'
 alias Syu='paru -Syu'
 alias S='paru -S'
+alias cal='cal --sunday --year'
 alias waypipe='waypipe '
 function uuid() {
 	(
