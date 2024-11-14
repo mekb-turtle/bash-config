@@ -286,25 +286,10 @@ function uuid() {
 }
 alias fd='sudo fdisk -l'
 function scr() {
-	(
-		set -o errexit -o pipefail || return 1
-		SCREENS="$(find /run/screens/S-"$USER"/ -maxdepth 1 -type s | sed "s/^.*\/[0-9]*\.//")"
-		if [[ "$#" -eq 0 ]]; then
-			echo "Available screens:"
-			printf "%s\n" "$SCREENS"
-			return 0
-		fi
-		if [[ "$#" -ne 1 ]]; then
-			printf "Usage: scr <screen>\n" >&2
-			return 1
-		fi
-
-		name="${1-Main}"
-		if grep -xF -- "$name" <<<"$SCREENS"; then
-			exec screen -xr -- "$name"
-		else
-			exec screen -T xterm-kitty -S "$name"
-		fi
-	)
+	echo "Reattach: screen -R <screen>"
+	echo "Detach: Ctrl+A, D"
+	echo "New: screen -T xterm-kitty -S <screen>"
+	echo "List: screen -ls"
+	screen -ls
 }
 alias vts='vt scan file -o'
