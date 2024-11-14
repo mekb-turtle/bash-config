@@ -292,4 +292,14 @@ function scr() {
 	echo "List: screen -ls"
 	screen -ls
 }
+function mes() {
+	if [[ ! -f meson.build ]]; then
+		echo "meson.build not found" >&2
+		return 1
+	fi
+	if [[ ! -d build ]]; then
+		meson setup build || return "$?"
+	fi
+	meson compile -C build "$@"
+}
 alias vts='vt scan file -o'
