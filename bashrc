@@ -46,7 +46,7 @@ function get_clean_working_directory(){
 	printf "%s" "$PREFIX$PWDHOME"
 }
 function get_clean_computer_name(){
-	if [[ -n "$SSH_CLIENT" ]]; then printf "%s" "($(hostname)) "; fi
+	if [[ -n "$SSH_CLIENT" ]]; then printf "%s" "($(uname -n)) "; fi
 }
 PS0=
 PS1='\[\e]2;\$ $(get_clean_working_directory)\a\]\[\e[0;2;37m\]'"$(get_clean_computer_name)"'$(get_clean_return_value)\[\e[0;38;5;10m\e]11;#1e1e2e\a\]\$\[\e[0;38;5;14m\] $(get_clean_working_directory)\[\e[0;37m\] > \[\e[0m\]'
