@@ -1,7 +1,0 @@
-build/
-*.o
-*.d
-*.tmp
-.idea/
-.vs/
-.vscode/
