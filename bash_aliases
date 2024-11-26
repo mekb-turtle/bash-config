@@ -67,8 +67,13 @@ if [[ "$OS" == "Windows_NT" ]]; then
 else
 	alias dmesg='sudo dmesg'
 	alias gparted='sudo gparted'
-	alias shutdown='/usr/local/sbin/do shutdown' # see https://github.com/mekb-turtle/do
-	alias restart='/usr/local/sbin/do restart'
+	if [[ -f /usr/local/sbin/do ]]; then
+		alias shutdown='/usr/local/sbin/do shutdown' # see https://github.com/mekb-turtle/do
+		alias restart='/usr/local/sbin/do restart'
+	else
+		alias shutdown='sudo env poweroff'
+		alias restart='sudo env reboot'
+	fi
 	alias ctl='sudo dinitctl'
 	alias uctl=dinitctl
 	alias doas='sudo '
