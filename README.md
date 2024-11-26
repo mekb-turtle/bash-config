@@ -22,10 +22,4 @@ Install node:
     pnpm i pnpm -g
     \npm un corepack npm pnpm -g # 
 
-Install script to open neovim for man pages:
-    
-    cd pager
-    meson setup build
-    sudo meson install -C build
-
 Also see my [other dotfiles](https://github.com/mekb-turtle/dotfiles)
