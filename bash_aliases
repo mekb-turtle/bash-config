@@ -82,13 +82,13 @@ else
 	else
 		alias sudo='sudo '
 	fi
-	
+
 	if type paru >/dev/null 2>/dev/null; then
 		function cleanup() {
 			local pkg
 			pkg="$(paru -Qdtq)"
 			if [[ -n "$pkg" ]]; then
-				paru -Rns - <<< "$pkg" || return "$?"
+				paru -Rns - <<<"$pkg" || return "$?"
 			fi
 			paru -Sc
 		}
@@ -154,8 +154,15 @@ alias clip=wl-copy
 alias paste=wl-paste
 alias xrandr=wlr-randr
 alias xev=wev
-if type bat >/dev/null 2>/dev/null; then alias bat='bat --decorations never'; alias cat=bat; fi
-if type batcat >/dev/null 2>/dev/null; then alias batcat='batcat --decorations never'; alias bat=batcat; alias cat=batcat; fi
+if type bat >/dev/null 2>/dev/null; then
+	alias bat='bat --decorations never'
+	alias cat=bat
+fi
+if type batcat >/dev/null 2>/dev/null; then
+	alias batcat='batcat --decorations never'
+	alias bat=batcat
+	alias cat=batcat
+fi
 function resetclear() {
 	# actually clear the console
 	printf "\x1b[H\x1b[2J\x1b[3J\x1bc\x1b]104\x1b[!p\x1b[?3;4l\x1b[4l\x1b>\x1b[?69l"

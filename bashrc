@@ -16,11 +16,11 @@ export EXA_COLORS="ur=38;5;11:uw=38;5;9:ux=38;5;10:ue=38;5;10:gr=38;5;11:gw=38;5
 export EDITOR=/usr/bin/nvim
 export MANPAGER='/usr/bin/nvim +Man!'
 PROMPT_COMMAND=
-function get_clean_return_value(){
+function get_clean_return_value() {
 	local RETVAL=$?
 	if [[ $RETVAL -ne 0 ]]; then printf %s "$RETVAL "; fi
 }
-function get_clean_working_directory(){
+function get_clean_working_directory() {
 	local N_CHAR
 	N_CHAR=48
 	local PWDHOME
@@ -45,7 +45,7 @@ function get_clean_working_directory(){
 	done
 	printf "%s" "$PREFIX$PWDHOME"
 }
-function get_clean_computer_name(){
+function get_clean_computer_name() {
 	if [[ -n "$SSH_CLIENT" ]]; then printf "%s" "($(uname -n)) "; fi
 }
 PS0=
