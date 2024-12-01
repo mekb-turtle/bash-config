@@ -102,6 +102,9 @@ function check_todo() {
 	fi
 }
 check_todo
+if [[ -f ~/.bashrc.local ]]; then
+	. ~/.bashrc.local
+fi
 unset -f check_todo
 if [[ $- == *i* ]]; then
 	if [[ -f /usr/share/blesh/ble.sh ]]; then
