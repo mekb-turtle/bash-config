@@ -8,33 +8,27 @@ if $HAS_EXA; then
 		alias exa='exa -hg --color=auto -b'
 	fi
 	alias tree='exa --tree'
-	alias ls=exa
-	alias l='exa -as modified'
-	alias la='exa -as modified'
-	alias ll='exa -la'
-	alias sl=exa
-	alias lsd=exa
-	alias lss=exa
-	alias lls=exa
-	alias lsc='exa -s modified'
-	alias lc='exa -as modified'
-	alias lac='exa -as modified'
-	alias lca='exa -as modified'
-	alias lcl='exa -las modified'
+	alias ls='exa -s modified'
+	alias lg='exa -s size -l'
+	alias l='ls -a'
+	alias la='ls -a'
+	alias ll='ls -la'
+	alias sl=ls
+	alias lsd=ls
+	alias lac='ls -a'
+	alias lca='ls -a'
+	alias lcl='ls -la'
 else
-	alias ls='ls --color=auto -b -k'
-	alias l='ls -A -t'
-	alias la='ls -A -t'
+	alias ls='ls --color=auto -b -k -t'
+	alias lg='ls -l --color=auto -S -k'
+	alias l='ls -A'
+	alias la='ls -A'
 	alias ll='ls -lA'
 	alias sl=ls
 	alias lsd=ls
-	alias lss=ls
-	alias lls=ls
-	alias lsc='ls -t'
-	alias lc='ls -A -t'
-	alias lac='ls -A -t'
-	alias lca='ls -A -t'
-	alias lcl='ls -lA -t'
+	alias lac='ls -A'
+	alias lca='ls -A'
+	alias lcl='ls -lA'
 fi
 alias c=cd
 alias dc=cd
