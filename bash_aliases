@@ -172,8 +172,8 @@ alias df='df -h'
 alias ufw='sudo ufw'
 alias uf='ufw status numbered'
 alias allowport="sudo setcap 'cap_net_bind_service=+ep'" # allow a binary to bind to ports below 1024
-alias nt='netstat -tnp'
-alias ntl='netstat -ltnp'
+alias nt='netstat -tp'
+alias ntl='netstat -ltp'
 alias rsy='rsync --archive --hard-links --acls --xattrs --one-file-system --atimes --times --numeric-ids --info=progress2' # preserves literally everything about files
 alias tarall='tar --one-file-system --xattrs --acls --numeric-owner --preserve-permissions --xattrs --xattrs-include=* --acls --atime-preserve'
 # quick aliases for killing programs
