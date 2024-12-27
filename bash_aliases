@@ -274,9 +274,19 @@ function mes() {
 		echo "meson.build not found" >&2
 		return 1
 	fi
-	if [[ ! -d build ]]; then
+	if [[ ! -f build/meson-info/intro-projectinfo.json ]]; then
 		meson setup build || return "$?"
 	fi
 	meson compile -C build "$@"
+}
+function mtest() {
+	if [[ ! -f meson.build ]]; then
+		echo "meson.build not found" >&2
+		return 1
+	fi
+	if [[ ! -f build/meson-info/intro-projectinfo.json ]]; then
+		meson setup build || return "$?"
+	fi
+	meson test -C build "$@"
 }
 alias vts='vt scan file -o'
