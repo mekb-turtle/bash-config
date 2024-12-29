@@ -277,24 +277,15 @@ function scr() {
 	echo "List: screen -ls"
 	screen -ls
 }
-function mes() {
+function meson-setup() {
 	if [[ ! -f meson.build ]]; then
 		echo "meson.build not found" >&2
 		return 1
 	fi
 	if [[ ! -f build/meson-info/intro-projectinfo.json ]]; then
-		meson setup build || return "$?"
+		meson setup build "$@" || return "$?"
 	fi
-	meson compile -C build "$@"
 }
-function mtest() {
-	if [[ ! -f meson.build ]]; then
-		echo "meson.build not found" >&2
-		return 1
-	fi
-	if [[ ! -f build/meson-info/intro-projectinfo.json ]]; then
-		meson setup build || return "$?"
-	fi
-	meson test -C build "$@"
-}
+alias mes='meson-setup && meson compile -C build'
+alias mtest='meson-setup && meson test -C build'
 alias vts='vt scan file -o'
