@@ -179,7 +179,24 @@ alias npx=pnpx
 alias df='df -h'
 alias ufw='sudo ufw'
 alias uf='ufw status numbered'
-alias allowport="sudo setcap 'cap_net_bind_service=+ep'" # allow a binary to bind to ports below 1024
+function allowport() {
+	if [[ "$#" -lt 1 ]]; then
+		echo "Usage: allowport <binary>"
+		return 1
+	fi
+	local path
+	for i in "$@"; do
+		path="$(realpath -- "$i")"
+		if [[ "$?" != 0 ]]; then
+			continue
+		fi
+		if [[ ! -e "$path" ]]; then
+			echo "File not found: $path" >&2
+			continue
+		fi
+		sudo setcap 'cap_net_bind_service=+ep' "$path"
+	done
+}
 alias nt='netstat -tp'
 alias ntl='netstat -ltp'
 alias rsy='rsync --archive --hard-links --acls --xattrs --one-file-system --atimes --times --numeric-ids --info=progress2' # preserves literally everything about files
