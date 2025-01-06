@@ -159,14 +159,14 @@ if type batcat >/dev/null 2>/dev/null; then
 fi
 function resetclear() {
 	# actually clear the console
-	printf "\x1b[0m" # reset colors
-	printf "\x1b[u" # restore cursor position
-	printf "\x1b[?25h" # show cursor
-	printf "\x1b[?47l" # restore screen
+	printf "\x1b[0m"     # reset colors
+	printf "\x1b[u"      # restore cursor position
+	printf "\x1b[?25h"   # show cursor
+	printf "\x1b[?47l"   # restore screen
 	printf "\x1b[?1049l" # disable alternative buffer
-	printf "\x1b[H" # move cursor to top left
-	printf "\x1b[2J" # clear screen
-	printf "\x1b[3J" # clear scrollback
+	printf "\x1b[H"      # move cursor to top left
+	printf "\x1b[2J"     # clear screen
+	printf "\x1b[3J"     # clear scrollback
 	printf "\x1b]2;\x07" # reset title
 	stty sane
 }
@@ -306,3 +306,6 @@ function meson-setup() {
 alias mes='meson-setup && meson compile -C build'
 alias mtest='meson-setup && meson test -C build'
 alias vts='vt scan file -o'
+function suppress() {
+	"$@" >/dev/null 2>/dev/null
+}
