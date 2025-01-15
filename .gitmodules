@@ -1,3 +1,6 @@
 [submodule "submodules/dotbot"]
 	path = submodules/dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "submodules/catppuccin-bat"]
+	path = submodules/catppuccin-bat
+	url = https://github.com/catppuccin/bat

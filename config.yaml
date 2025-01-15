@@ -5,7 +5,9 @@
     link:
       relink: yes
 - create:
-    - ~/.bin
+    - ~/.bin/
+    - ~/.config/
+    - ~/.config/bat/
 - link:
     ~/.bash_aliases: bash_aliases
     ~/.bash_logout: bash_logout
@@ -13,3 +15,10 @@
     ~/.bashrc: bashrc
     ~/.bin/copyfile: scripts/copyfile
     ~/.blerc: blerc
+    ~/.config/bat/themes/Catppuccin Latte.tmTheme: submodules/catppuccin-bat/themes/Catppuccin Latte.tmTheme
+    ~/.config/bat/themes/Catppuccin Frappe.tmTheme: submodules/catppuccin-bat/themes/Catppuccin Frappe.tmTheme
+    ~/.config/bat/themes/Catppuccin Macchiato.tmTheme: submodules/catppuccin-bat/themes/Catppuccin Macchiato.tmTheme
+    ~/.config/bat/themes/Catppuccin Mocha.tmTheme: submodules/catppuccin-bat/themes/Catppuccin Mocha.tmTheme
+- shell:
+    - - bat cache --build
+      - Building bat cache

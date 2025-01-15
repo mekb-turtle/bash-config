@@ -5,6 +5,7 @@
 Usage:
 - Clone repo with submodules
 - Run `./install`
+- Run `paru` command below to install packages
 
 Uses [dotbot](https://github.com/anishathalye/dotbot)
 
