@@ -8,6 +8,7 @@
     - ~/.bin/
     - ~/.config/
     - ~/.config/bat/
+    - ~/.config/bat/themes/
 - link:
     ~/.bash_aliases: bash_aliases
     ~/.bash_logout: bash_logout
