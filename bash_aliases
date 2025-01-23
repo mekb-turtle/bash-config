@@ -53,6 +53,8 @@ alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias cd..='cd ..'
 alias ..='cd ..'
+alias vg='valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full'
+alias trash='trash -v'
 if [[ "$OS" == "Windows_NT" ]]; then
 	alias shutdown='\shutdown -s -t 0'
 	alias restart='\shutdown -r -t 0'
@@ -90,41 +92,6 @@ else
 fi
 alias poweroff='shutdown'
 alias reboot='restart'
-
-function filecopy() {
-	local dest
-	local base
-	local out
-	local path
-	dest="$1"
-	shift
-	for i in "$@"; do
-		path="$(realpath -- "$i")"
-		if [[ ! -f "$path" ]]; then
-			echo "Source is not a file: $path" >&2
-			return 1
-		fi
-		base="$(basename -- "$path")"
-		if [[ ! -d "$dest" ]]; then
-			echo "Destination is not a directory: $dest" >&2
-			return 1
-		fi
-		out="$dest/$base"
-		echo "Copying $path to $out..."
-		if ! pv -Yo "$out" -- "$path"; then
-			echo "Failed to copy $path to $out" >&2
-			return 1
-		fi
-		HASH_1="$(sha256sum -- "$path" | awk '{print $1}')"
-		echo "Input hash: $HASH_1" >&2
-		HASH_2="$(sha256sum -- "$out" | awk '{print $1}')"
-		echo "Output hash: $HASH_2" >&2
-		if [[ "$HASH_1" != "$HASH_2" ]]; then
-			echo "Hashes do not match" >&2
-			return 1
-		fi
-	done
-}
 
 alias neofetch=hyfetch
 
@@ -306,6 +273,8 @@ function meson-setup() {
 alias mes='meson-setup && meson compile -C build'
 alias mtest='meson-setup && meson test -C build'
 alias vts='vt scan file -o'
+alias mpvlive='mpv --profile=low-latency --cache=no --untimed'
+alias mpva='mpv --no-video'
 function suppress() {
 	"$@" >/dev/null 2>/dev/null
 }
